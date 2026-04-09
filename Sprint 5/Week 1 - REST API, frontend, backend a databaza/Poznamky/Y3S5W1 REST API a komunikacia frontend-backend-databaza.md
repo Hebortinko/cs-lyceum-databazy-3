@@ -24,6 +24,8 @@
 ---
 ### [Async vs Sync](https://youtu.be/pcMX9YJ-zQc?si=e40gTBO1atPLOsS1)
 
+### [HTTP response status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status)
+
 ## 1. Preco sa ucime REST API
 
 V sprinte 4 sme sa naucili:
