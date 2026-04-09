@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>REST API Login Starter</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #eef4f1;
+      --card: #ffffff;
+      --text: #1f2a2b;
+      --muted: #647273;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --border: #d5dfdb;
+      --ok: #0f766e;
+      --error: #b42318;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 28%),
+        linear-gradient(180deg, #f7fbf8 0%, var(--bg) 100%);
+      color: var(--text);
+    }
+
+    .card {
+      width: min(420px, calc(100vw - 32px));
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 18px 50px rgba(17, 24, 39, 0.08);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.9rem;
+    }
+
+    p {
+      margin: 0 0 20px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    form {
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    input {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 6px;
+      padding: 13px 16px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--accent);
+      color: white;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .result {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 12px;
+      background: #f5f8f7;
+      border: 1px solid var(--border);
+      min-height: 74px;
+      line-height: 1.45;
+      white-space: pre-line;
+    }
+
+    .success {
+      color: var(--ok);
+    }
+
+    .error {
+      color: var(--error);
+    }
+
+    .hint {
+      margin-top: 18px;
+      font-size: 0.92rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Login demo</h1>
+    <p>
+      Jednoduchy starter na vysvetlenie flowu frontend -> API -> databaza.
+    </p>
+
+    <form id="login-form">
+      <label>
+        Email
+        <input id="email" name="email" type="email" placeholder="eva@lyceum.sk" required>
+      </label>
+
+      <label>
+        Heslo
+        <input id="password" name="password" type="password" placeholder="tajneheslo" required>
+      </label>
+
+      <button type="submit">Prihlasit sa</button>
+    </form>
+
+    <div id="result" class="result">Sem pride odpoved z API.</div>
+
+    <p class="hint">
+      Uloha pre studentov: upravte tabulku `users`, validacie a odpoved podla vlastneho projektu.
+    </p>
+  </main>
+
+  <script>
+    const form = document.getElementById("login-form");
+    const result = document.getElementById("result");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      result.textContent = "Odosielam request...";
+      result.className = "result";
+
+      const payload = {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
+      };
+
+      try {
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          result.className = "result error";
+          result.textContent =
+            `API vratilo chybu ${response.status}.\nSkontroluj konzolu v Rideri a .env subor.\n\n${errorText.slice(0, 220)}`;
+          return;
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          result.className = "result success";
+          result.textContent =
+            `${data.message}\nMeno: ${data.displayName}\nEmail: ${data.email}\nRola: ${data.role}`;
+        } else {
+          result.className = "result error";
+          result.textContent = data.message;
+        }
+      } catch (error) {
+        result.className = "result error";
+        result.textContent =
+          "Nepodarilo sa spojit s API. Skontroluj ci aplikacia bezi na tej istej adrese a ci sa otvorila cez ASP.NET, nie ako samostatny HTML subor.";
+      }
+    });
+  </script>
+</body>
+</html>
