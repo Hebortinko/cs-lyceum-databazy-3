@@ -1,58 +1,105 @@
-# Week 1 – REST API, frontend, backend a databáza
+# Week 1 - REST API, frontend, backend a databaza
 
-## Čo sme robili
+## O com je tento tyzden
 
-V prvom týždni sprintu 5 spájame databázy a programovanie do jedného flowu:
+V tomto tyzdni prepajame databazy a programovanie do jedneho celeho flowu:
 
-`frontend -> REST API -> business logika -> databáza -> odpoveď späť na frontend`
+```text
+frontend -> backend API -> databaza -> backend -> frontend
+```
 
-Cieľom je aby študenti chápali, že databáza už nie je izolovaná téma. V reálnej aplikácii frontend neposiela SQL priamo do databázy, ale komunikuje s backendom cez API. Backend validuje vstup, volá databázu a vracia odpoveď vo formáte JSON.
+Dolezite je pochopit, ze frontend vacsinou nekomunikuje priamo s databazou.
 
-## Čo sme naprogramovali
+Pouzivatel pracuje s formularom alebo tlacidlom vo frontende, frontend posle request na backend, backend spravi logiku a az potom cita alebo zapisuje data do databazy.
 
-### `DatabazyApiStarter`
-Jednoduchý štartovací projekt v C# ktorý ukazuje:
+---
 
-- statické HTML login UI vo `wwwroot`
-- endpoint `POST /api/auth/login`
-- vrstvy `Repository` + `Service`
-- napojenie na PostgreSQL cez `Npgsql`
-- základné validácie pri prihlasovaní
+## Co sme sa ucili
 
-### SQL skripty
+V tomto weeku si ukazujeme:
 
-V priečinku `sql` je jednoduchá ukážka:
+- co je REST API
+- co je endpoint
+- ako frontend odosiela request
+- ako backend prijima data
+- ako backend cita udaje z databazy
+- ako sa odpoved vracia spat vo formate JSON
 
-- vytvorenie tabuľky `users`
-- seed testovacích dát
+Ako ukazku pouzivame jednoduchy login flow a jeden alebo dva male databazove cally.
 
-Môžeš to použiť ako demonštračné minimum alebo ako štartovaciu šablónu ktorú si študenti upravia podľa vlastného projektu.
+---
 
-## Kľúčové koncepty
+## Co je v tomto priecinku
 
-- čo je REST API a prečo ho používame
-- rozdiel medzi `frontend`, `backend` a `database`
-- `GET` vs `POST`
-- `request` a `response`
-- JSON ako dátový formát medzi frontendom a backendom
-- validácia vstupu pred dotazom do databázy
-- Repository Pattern aj vo webovej aplikácii
-- prečo frontend nikdy nemá komunikovať priamo s databázou
+### `Poznamky`
 
-## Odporúčaný priebeh 3 x 45 min
+Tu su vysvetlenia pojmov a celeho toku:
 
-1. blok:
-- intro do architektúry `frontend -> backend -> db`
-- vysvetlenie REST API, endpointov a JSON
-- nakresliť aspoň 2 request flowy na tabuľu
+- frontend
+- backend
+- databaza
+- request
+- response
+- route endpoint
+- service vrstva
+- repository vrstva
 
-2. blok:
-- prejsť si starter kód
-- ukázať login request a odpoveď
-- vysvetliť `Repository`, `Service`, `Program.cs`
+### `Cvicenia`
 
-3. blok:
-- študenti robia cvičenie
-- navrhnú vlastnú tabuľku používateľov alebo upravia existujúcu
-- doplnia login logiku a základné kontroly
-- pripravia si zadanie pre spoločný projekt databázy + programovanie
+Tu su jednoduche zadania na precvicenie:
+
+- login od nuly
+- dalsi jednoduchy call do databazy a zobrazenie viacerych udajov
+
+### `Kody`
+
+Tu je starter projekt v C#, na ktorom je ukazane:
+
+- jednoduche HTML rozhranie
+- API endpoint
+- pripojenie na PostgreSQL
+- citanie usera z databazy
+- vratenie JSON odpovede
+
+---
+
+## Co si vsimni v starter projekte
+
+V kode sa sustred hlavne na tieto casti:
+
+- `wwwroot/index.html`
+- `Program.cs`
+- `Services/AuthService.cs`
+- `Repositories/UserRepository.cs`
+- `Database.cs`
+- `sql/01_create_users.sql`
+
+Ak porozumies tymto suborom, budes vediet vysvetlit hlavnu myslienku celeho tyzdna.
+
+---
+
+## Hlavna myslienka
+
+Najdolezitejsie je chapat rozdiel medzi vrstvami:
+
+- frontend zbiera vstup a zobrazuje vysledok
+- backend prijima request a robi logiku
+- databaza uchovava data
+
+Ak sa pouzivatel prihlasuje, frontend neposiela SQL do databazy.
+
+Frontend posle data backendu, backend vyhodnoti situaciu, zavola databazu a vrati odpoved.
+
+---
+
+## Reflexia
+
+Po prejdeni tohto weeku by si mal vediet odpovedat na tieto otazky:
+
+- Viem vysvetlit rozdiel medzi frontendom, backendom a databazou?
+- Viem najst v kode miesto, kde frontend vola API?
+- Viem najst v kode miesto, kde backend cita data z databazy?
+- Viem vysvetlit, preco frontend nema komunikovat priamo s databazou?
+- Viem popisat login flow od kliknutia na tlacidlo az po odpoved na stranke?
+
+Ak vies odpovedat na tieto otazky vlastnymi slovami, ciel tohto tyzdna je splneny.

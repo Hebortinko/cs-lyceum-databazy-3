@@ -20,7 +20,7 @@
 14. [Preco to je rozdelene do vrstiev](#14-preco-to-je-rozdelene-do-vrstiev)
 15. [Najcastejsie chyby](#15-najcastejsie-chyby)
 16. [Zhrnutie](#16-zhrnutie)
-
+**[Async vs Sync](https://youtu.be/pcMX9YJ-zQc?si=e40gTBO1atPLOsS1)**
 ---
 
 ## 1. Preco sa ucime REST API
